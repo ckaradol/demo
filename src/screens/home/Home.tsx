@@ -4,6 +4,7 @@ import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import Header from "../../widgets/Header";
 import Clip from "../../widgets/Clip";
 import TopBar from "../../widgets/TopBar";
+import ListTile from "../../widgets/ListTile";
 const { width } = Dimensions.get('window');
 const HomeScreen = () => {
   return (
@@ -80,7 +81,11 @@ const HomeScreen = () => {
             }}>Most Popular</Text>
             <Clip label="View All" ></Clip>
           </View>
-
+          <ListTile label="Jordan 1 White" subtitle="$566.19"
+            image="nike1" indirim="20%" ></ListTile>
+            <ListTile label="Mid Cocunut Nike" subtitle="$195.20"
+            color="#F6F4E5"
+            image="nike2" indirim="15%" ></ListTile>
         </ScrollView>
       </SafeAreaView>
     </SafeAreaProvider>
@@ -100,7 +105,9 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   scrollView: {
-
+    bottom: 40,
+    top: 0,
+    marginBottom: 70,
     backgroundColor: 'white',
   },
 
