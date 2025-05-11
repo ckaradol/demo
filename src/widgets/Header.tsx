@@ -8,9 +8,10 @@ const Header = () => {
    <View style={{
     padding: 20,
     paddingBottom: 0,
-               width: width - 20, flexDirection: 'row',
+              flexDirection: 'row',
                justifyContent: 'space-between',
                paddingRight: 20,
+               alignItems: "center",
                
              }}>
                <Text style={styles.text}>Explore <Text style={{

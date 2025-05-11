@@ -9,7 +9,7 @@ const TopBar = () => {
     padding: 20,
                 paddingBottom: 0,
                 paddingTop: 0,
-                      width: width - 20, flexDirection: 'row',
+                       flexDirection: 'row',
                       justifyContent: 'space-between',
                       paddingRight: 20,
                       marginTop: 20,

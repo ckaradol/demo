@@ -1,12 +1,28 @@
 import React from "react";
-import { StyleSheet, Text, ScrollView, StatusBar, Image, View, Dimensions, } from 'react-native';
+import { StyleSheet, Text, ScrollView, StatusBar,Alert, Image, View, Dimensions, TouchableOpacity} from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import Header from "../../widgets/Header";
 import Clip from "../../widgets/Clip";
 import TopBar from "../../widgets/TopBar";
 import ListTile from "../../widgets/ListTile";
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+type RootStackParamList = {
+  Cart: undefined;
+
+};
+
+type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Cart'>;
+
+type Props = {
+  navigation: HomeScreenNavigationProp;
+};
 const { width } = Dimensions.get('window');
-const HomeScreen = () => {
+
+const HomeScreen: React.FC<Props> = ({navigation}) => {
+   const handleTap = () => {
+  navigation.navigate('Cart');
+  };
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container} >
@@ -15,6 +31,7 @@ const HomeScreen = () => {
           <Header />
           <TopBar></TopBar>
           <ScrollView horizontal={true}>
+            <TouchableOpacity onPress={handleTap} style={{ zIndex: 10}}>
             <View
               style={[styles.card, { backgroundColor: "#FAF4F4" }]}>
               <Image
@@ -33,6 +50,7 @@ const HomeScreen = () => {
                </View>
               </View>
             </View>
+            </TouchableOpacity>
             <View
               style={[styles.card, { backgroundColor: "#F8F5FC" }]}>
               <Image

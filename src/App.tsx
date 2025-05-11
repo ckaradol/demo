@@ -17,14 +17,33 @@ import {
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import  BottomNavigationBar  from "./widgets/BottomNavigationBar";
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import CardScreen from './screens/card_screen/card_screen';
+
+const Stack = createNativeStackNavigator();
 function App(): React.JSX.Element {
 
   return (
      <View style={{ flex: 1 }}>
       <StatusBar barStyle={'light-content'} />
       <NavigationContainer >
-          
-        <BottomNavigationBar />
+           <Stack.Navigator>
+            <Stack.Screen
+            options={{ headerShown: false }}
+            name="Home" component={BottomNavigationBar} />
+        <Stack.Screen
+          options={{
+    title: 'Payment Method',
+    headerTintColor: '#40355F',
+    
+
+headerTitleAlign:"center",
+     headerShadowVisible: false,
+    headerTitleStyle: { fontWeight: 'bold' },
+  }}
+        name="Cart" component={CardScreen} />
+      </Stack.Navigator>
+       
       </NavigationContainer>
    </View>
   );
