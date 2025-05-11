@@ -66,7 +66,7 @@ function removeCount():void {
              <Text style={{ color: "#494949", padding:5}}>{formatNumber(count)}</Text>
           <TouchableOpacity
            onPress={removeCount}
-          style={{ borderColor:count<=1?"#FAFAFA" :"#331761", backgroundColor: count<=1?"fff":"#411380", padding: 5, borderWidth: 1, borderRadius: 40, justifyContent: "center", alignItems: "center", width: 40, height: 40, }}>
+          style={{ borderColor:count<=1?"#FAFAFA" :"#331761", backgroundColor: count<=1?"#fff":"#411380", padding: 5, borderWidth: 1, borderRadius: 40, justifyContent: "center", alignItems: "center", width: 40, height: 40, }}>
             <Image style={{ width: 20, height: 20, tintColor: "#D0B3F3" }} source={require("../../../assets/images/remove.png")}></Image>
           </TouchableOpacity>
           </View>
