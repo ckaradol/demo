@@ -8,20 +8,18 @@ import ListTile from "../../widgets/ListTile";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type RootStackParamList = {
-  Cart: undefined;
-
+DetailScreen: undefined;
 };
 
-type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Cart'>;
+type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'DetailScreen'>;
 
 type Props = {
   navigation: HomeScreenNavigationProp;
 };
-const { width } = Dimensions.get('window');
 
 const HomeScreen: React.FC<Props> = ({navigation}) => {
    const handleTap = () => {
-  navigation.navigate('Cart');
+  navigation.navigate('DetailScreen');
   };
   return (
     <SafeAreaProvider>

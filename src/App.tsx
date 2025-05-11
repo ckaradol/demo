@@ -16,36 +16,44 @@ import {
   View,
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import  BottomNavigationBar  from "./widgets/BottomNavigationBar";
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import BottomNavigationBar from "./widgets/BottomNavigationBar";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CardScreen from './screens/card_screen/card_screen';
+import DetailScreen from './screens/detail_screen/DetailScreen';
 
 const Stack = createNativeStackNavigator();
 function App(): React.JSX.Element {
 
   return (
-     <View style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <StatusBar barStyle={'light-content'} />
       <NavigationContainer >
-           <Stack.Navigator>
-            <Stack.Screen
+        <Stack.Navigator>
+          <Stack.Screen
             options={{ headerShown: false }}
             name="Home" component={BottomNavigationBar} />
+          <Stack.Screen
+            options={{
+              title: 'Payment Method',
+              headerTintColor: '#40355F',
+              headerTitleAlign: "center",
+              headerShadowVisible: false,
+              headerTitleStyle: { fontWeight: 'bold' },
+            }}
+            name="Cart" component={CardScreen} />
         <Stack.Screen
-          options={{
-    title: 'Payment Method',
-    headerTintColor: '#40355F',
-    
+            options={{
+              title: '',
+              headerTintColor: '#40355F',
+              headerTitleAlign: "center",
+              headerShadowVisible: false,
+              headerTitleStyle: { fontWeight: 'bold' },
+            }}
+            name="DetailScreen" component={DetailScreen} />
+        </Stack.Navigator>
 
-headerTitleAlign:"center",
-     headerShadowVisible: false,
-    headerTitleStyle: { fontWeight: 'bold' },
-  }}
-        name="Cart" component={CardScreen} />
-      </Stack.Navigator>
-       
       </NavigationContainer>
-   </View>
+    </View>
   );
 }
 
