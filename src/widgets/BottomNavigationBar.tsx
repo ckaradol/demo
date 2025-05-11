@@ -88,7 +88,7 @@ const BottomNavigationBar = () => {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarActiveTintColor: "#6CE2D2",
+        tabBarActiveTintColor: "#CACACA",
         tabBarStyle: {
           position: "absolute",
           bottom: 0,
