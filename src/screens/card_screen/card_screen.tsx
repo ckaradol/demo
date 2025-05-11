@@ -1,8 +1,12 @@
-import React from "react";
+import React,{useEffect} from "react";
 import ListTile from "../../widgets/ListTile";
-import { View, Text, StyleSheet,ScrollView,Image,Button } from "react-native";
-
+import { View, Text, StyleSheet,ScrollView,Image,Button, } from "react-native";
+import Orientation from 'react-native-orientation-locker';
 const CardScreen=()=>{
+    useEffect(() => {
+  Orientation.unlockAllOrientations(); // sadece dikey mod
+  return () => Orientation.lockToPortrait(); // component kapanınca resetle
+}, []);
     return(
         <View style={styles.container}>
           <ScrollView style={styles.container}>

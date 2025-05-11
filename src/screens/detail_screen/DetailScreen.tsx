@@ -1,9 +1,10 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image, } from "react-native";
+import React,{useEffect} from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import FullCircleScroll from "../../widgets/CircleMenu"; // Yarım daire menüsünü içe aktar
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import ImageSlider from "../../widgets/ImageSlider";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import Orientation from 'react-native-orientation-locker';
 type RootStackParamList = {
   Cart: undefined;
 };
@@ -14,22 +15,25 @@ type Props = {
   navigation: HomeScreenNavigationProp;
 };
 const DetailScreen: React.FC<Props> = ({ navigation }) => {
-  function formatNumber(number:number):string {
-  return number < 10 ? `0${number}` : `${number}`;
-}
-
-  const [count, setCountValue] = React.useState(1)
-   function addCount():void {
-  setCountValue(count + 1);
-}
-function removeCount():void {
-  if(count<=1){
-    setCountValue(1);
-    return;
+  function formatNumber(number: number): string {
+    return number < 10 ? `0${number}` : `${number}`;
   }
+useEffect(() => {
+  Orientation.lockToPortrait(); // sadece dikey mod
+  return () => Orientation.unlockAllOrientations(); // component kapanınca resetle
+}, []);
+  const [count, setCountValue] = React.useState(1)
+  function addCount(): void {
+    setCountValue(count + 1);
+  }
+  function removeCount(): void {
+    if (count <= 1) {
+      setCountValue(1);
+      return;
+    }
 
-  setCountValue(count - 1);
-}
+    setCountValue(count - 1);
+  }
   return (
     <View style={styles.container}>
       <View style={{ zIndex: 10, position: 'absolute', top: 0 }}>
@@ -57,20 +61,20 @@ function removeCount():void {
           <Text style={{ fontSize: 20, fontWeight: "bold", color: "#CB7C41" }}>$526.14 <Text style={{ fontSize: 14, fontWeight: "normal", color: "#CBD0D6" }}>Save flat 20%</Text></Text>
         </View>
         <View>
-          <View style={{alignItems: "center", justifyContent: "center" }}>
+          <View style={{ alignItems: "center", justifyContent: "center" }}>
             <TouchableOpacity
-            onPress={addCount}
-            style={{ borderColor: "#331761", backgroundColor: "#411380", padding: 5, borderWidth: 1, borderRadius: 40, justifyContent: "center", alignItems: "center", width: 40, height: 40, }}>
+              onPress={addCount}
+              style={{ borderColor: "#331761", backgroundColor: "#411380", padding: 5, borderWidth: 1, borderRadius: 40, justifyContent: "center", alignItems: "center", width: 40, height: 40, }}>
               <Image style={{ width: 20, height: 20, tintColor: "#D0B3F3" }} source={require("../../../assets/images/add.png")}></Image>
             </TouchableOpacity>
-             <Text style={{ color: "#494949", padding:5}}>{formatNumber(count)}</Text>
-          <TouchableOpacity
-           onPress={removeCount}
-          style={{ borderColor:count<=1?"#FAFAFA" :"#331761", backgroundColor: count<=1?"#fff":"#411380", padding: 5, borderWidth: 1, borderRadius: 40, justifyContent: "center", alignItems: "center", width: 40, height: 40, }}>
-            <Image style={{ width: 20, height: 20, tintColor: "#D0B3F3" }} source={require("../../../assets/images/remove.png")}></Image>
-          </TouchableOpacity>
+            <Text style={{ color: "#494949", padding: 5 }}>{formatNumber(count)}</Text>
+            <TouchableOpacity
+              onPress={removeCount}
+              style={{ borderColor: count <= 1 ? "#FAFAFA" : "#331761", backgroundColor: count <= 1 ? "#fff" : "#411380", padding: 5, borderWidth: 1, borderRadius: 40, justifyContent: "center", alignItems: "center", width: 40, height: 40, }}>
+              <Image style={{ width: 20, height: 20, tintColor: "#D0B3F3" }} source={require("../../../assets/images/remove.png")}></Image>
+            </TouchableOpacity>
           </View>
-         
+
         </View></View>
       <GestureHandlerRootView style={{ zIndex: 0, bottom: 0 }}>
         <FullCircleScroll />

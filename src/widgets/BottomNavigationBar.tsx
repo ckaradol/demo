@@ -1,223 +1,159 @@
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import BoxScreen from "../screens/box/box";
-
+import { View, Image, Dimensions, TouchableOpacity } from "react-native";
+import Svg, { Path } from "react-native-svg";
 import HomeScreen from "../screens/home/Home";
 import CategoryScreen from "../screens/category/category";
-import ProfileScreen from "../screens/profile/Profile";
 import SearchScreen from "../screens/search/Search";
-import ReactNative from "react-native";
-import React, { ReactNode, isValidElement, ReactElement } from "react";
+import BoxScreen from "../screens/box/box";
+import ProfileScreen from "../screens/profile/Profile";
+import { getPathDown } from "./utils/getPathDown";
+
 const Tab = createBottomTabNavigator();
-type Props = {
+const { width } = Dimensions.get("window");
+const TAB_HEIGHT = 70;
 
-  children: ReactNode;
-  onPress?: any;
-};
-const CustomTabBarButton = ({ children, onPress }: Props) => {
-  let childStyle = {};
-
-  // Eğer JSX elementi ise, style'ını al
-  if (isValidElement(children)) {
-    const element = children as ReactElement<{ style?: any }>;
-    childStyle = element.props.style ?? {};
-  }
-  return (
-    <ReactNative.TouchableOpacity
+const CustomTabBarButton = ({ children, onPress }: any) => (
+  <TouchableOpacity
+    style={{
+      top: -30,
+      justifyContent: "center",
+      alignItems: "center",
+    }}
+    onPress={onPress}
+  >
+    <View
       style={{
-        top: -30,
+        width: 60,
+        height: 60,
+        borderRadius: 35,
+        backgroundColor: "#6CE2D2",
         justifyContent: "center",
         alignItems: "center",
-        ...childStyle,
-      }}
-      onPress={(e) => {
-        onPress && onPress();
+        shadowColor: "white",
+        shadowRadius: 5,
+        shadowOffset: {
+          width: 10,
+          height: 10,
+        },
       }}
     >
-      <ReactNative.View
-        style={{
-          width: 70,
-          height: 70,
-          
-          borderRadius: 35,
-          backgroundColor: "#6CE2D2",
-          justifyContent: "center",
-          alignItems: "center",
-          shadowColor: "white",
-          shadowRadius: 5,
-          shadowOffset: {
-            width: 10,
-            height: 10,
-          },
-        }}>
-        {children}
-      </ReactNative.View>
+      {children}
+    </View>
+  </TouchableOpacity>
+);
 
-    </ReactNative.TouchableOpacity>
-  )
+const CustomTabBarBackground = () => {
+  const path = getPathDown(width, TAB_HEIGHT, 50,true,"CENTER"); // ortada 90 px’lik çukur
+
+  return (
+    <Svg
+      width={width}
+      height={TAB_HEIGHT }
+      style={{ position: "absolute", bottom: 0 }}
+    >
+      <Path d={path} fill="black" />
+    </Svg>
+  );
 };
+
+const TabIcon = ({ source, focused, color, size }: any) => (
+  <View style={{ alignItems: "center" }}>
+    <Image
+      source={source}
+      style={{
+        marginTop: 10,
+        width: size,
+        height: size,
+        tintColor: color,
+      }}
+    />
+    {focused && (
+      <View
+        style={{
+          width: 6,
+          height: 6,
+          borderRadius: 3,
+          backgroundColor: color,
+          marginTop: 4,
+        }}
+      />
+    )}
+  </View>
+);
+
 const BottomNavigationBar = () => {
   return (
     <Tab.Navigator
-             
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        sceneStyle: {
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "#f0f0f0",
-          height: "100%",
-        },
-        tabBarActiveTintColor: "white",
+        tabBarActiveTintColor: "#6CE2D2",
         tabBarStyle: {
           position: "absolute",
           bottom: 0,
           left: 0,
-          paddingTop: 10,
           right: 0,
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
+          height: TAB_HEIGHT,
+          backgroundColor: "transparent",
+          borderTopWidth: 0,
           elevation: 0,
-          backgroundColor: "black",
-
-          height: 70,
         },
+        tabBarBackground: () => <CustomTabBarBackground />,
       }}
     >
-      <Tab.Screen name="Anasayfa" component={HomeScreen}
+      <Tab.Screen
+        name="Anasayfa"
+        component={HomeScreen}
         options={{
-          tabBarIcon: ({focused, color, size }) => (
-             <ReactNative.View style={{ alignItems: 'center' }}>
-        <ReactNative.Image
-          source={require("../../assets/images/home.png")}
-          style={{
-            marginTop: 10,
-            width: size,
-            height: size,
-            tintColor: color,
-          }}
-        />
-        {focused && (
-          <ReactNative.View
-            style={{
-              width: 6,
-              height: 6,
-              borderRadius: 3,
-              backgroundColor: color,
-              marginTop: 4,
-            }}
-          />
-        )}
-      </ReactNative.View>
-           
+          tabBarIcon: (props) => (
+            <TabIcon {...props} source={require("../../assets/images/home.png")} />
           ),
         }}
       />
-      <Tab.Screen name="Kategori" component={CategoryScreen}
+      <Tab.Screen
+        name="Kategori"
+        component={CategoryScreen}
         options={{
-          tabBarIcon: ({focused, color, size }) => (
-           <ReactNative.View style={{ alignItems: 'center' }}>
-        <ReactNative.Image
-          source={require("../../assets/images/category.png")}
-          style={{
-            marginTop: 10,
-            width: size,
-            height: size,
-            tintColor: color,
-          }}
-        />
-        {focused && (
-          <ReactNative.View
-            style={{
-              width: 6,
-              height: 6,
-              borderRadius: 3,
-              backgroundColor: color,
-              marginTop: 4,
-            }}
-          />
-        )}
-      </ReactNative.View>
-
+          tabBarIcon: (props) => (
+            <TabIcon {...props} source={require("../../assets/images/category.png")} />
           ),
-        }} />
-      <Tab.Screen name="Ara" component={SearchScreen}
+        }}
+      />
+      <Tab.Screen
+        name="Ara"
+        component={SearchScreen}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <ReactNative.Image
+          tabBarIcon: ({ color }) => (
+            <Image
               resizeMode="contain"
               source={require("../../assets/images/search.png")}
-              style={{
-
-                width: 30, height: 30, tintColor: color
-              }}
+              style={{ width: 30, height: 30, tintColor: color }}
             />
           ),
-          tabBarButton: (props) => (
-            <CustomTabBarButton {...props} />
-          ),
-        }} />
-      <Tab.Screen name="Box" component={BoxScreen}
+          tabBarButton: (props) => <CustomTabBarButton {...props} />,
+        }}
+      />
+      <Tab.Screen
+        name="Box"
+        component={BoxScreen}
         options={{
-          tabBarIcon: ({focused, color, size }) => (
-             <ReactNative.View style={{ alignItems: 'center' }}>
-        <ReactNative.Image
-          source={require("../../assets/images/box.png")}
-          style={{
-            marginTop: 10,
-            width: size,
-            height: size,
-            tintColor: color,
-          }}
-        />
-        {focused && (
-          <ReactNative.View
-            style={{
-              width: 6,
-              height: 6,
-              borderRadius: 3,
-              backgroundColor: color,
-              marginTop: 4,
-            }}
-          />
-        )}
-      </ReactNative.View>
-          
+          tabBarIcon: (props) => (
+            <TabIcon {...props} source={require("../../assets/images/box.png")} />
           ),
         }}
       />
-      <Tab.Screen name="Profil" component={ProfileScreen}
+      <Tab.Screen
+        name="Profil"
+        component={ProfileScreen}
         options={{
-          tabBarIcon: ({ focused,color, size }) => (
-            <ReactNative.View style={{ alignItems: 'center' }}>
-        <ReactNative.Image
-          source={require("../../assets/images/profile.png")}
-          style={{
-            marginTop: 10,
-            width: size,
-            height: size,
-            tintColor: color,
-          }}
-        />
-        {focused && (
-          <ReactNative.View
-            style={{
-              width: 6,
-              height: 6,
-              borderRadius: 3,
-              backgroundColor: color,
-              marginTop: 4,
-            }}
-          />
-        )}
-      </ReactNative.View>
-      
+          tabBarIcon: (props) => (
+            <TabIcon {...props} source={require("../../assets/images/profile.png")} />
           ),
         }}
       />
-
     </Tab.Navigator>
   );
-}
+};
+
 export default BottomNavigationBar;
